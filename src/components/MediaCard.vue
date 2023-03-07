@@ -27,28 +27,35 @@ export default {
     data() {
         return {
             store,
-            srcVal: "",
             mediaArray: [],
         }
     },
-    watch: {
-        mediaInfoRequest(srcVal) {
+    methods: {
+        mediaInfoRequest() {
             axios
                 .get(this.apiUrl, {
                     params: {
-                        q: srcVal,
+                        query: this.srcVal,
                     }
                 }
                 )
                 .then((res) => {
-                    console.log(res.data.results)
                     this.mediaArray = res.data.results
                 })
         },
     },
+    watch: {
+        srcVal(newVal, oldVal) {
+            console.log(newVal, oldVal)
+            this.mediaInfoRequest()
+        }
+    },
     computed: {
         apiUrl() {
             return this.store.apiUrl
+        },
+        srcVal() {
+            return this.store.srcVal
         }
     },
 

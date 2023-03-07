@@ -19,8 +19,7 @@ export default {
     },
     methods: {
         searchFunction() {
-            this.$emit(this.srcVal)
-            console.log("click!", this.srcVal)
+            this.store.srcVal = this.srcVal
         }
     },
     computed: {

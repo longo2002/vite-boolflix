@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-    <h1>{{ this.store.msg }}</h1>
+    <h1>Footer</h1>
 </template>
 
 <style scoped></style>
