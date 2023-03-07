@@ -1,6 +1,6 @@
 <template>
     <div class="mediacard_container">
-        <div class="mediacard">
+        <div v-for="media in mediaArray" class="mediacard">
             <ul>
                 <li>
                     <h2>{{ media.title }}</h2>
@@ -27,27 +27,33 @@ export default {
     data() {
         return {
             store,
-            media: [],
+            mediaArray: [],
         }
     },
     methods: {
         mediaInfoRequest() {
             axios
-                .get(this.apiKey)
+                .get(this.apiUrl,
+                    // {
+                    //     params: {
+                    //         q: ,
+                    //     }
+                    // }
+                )
                 .then((res) => {
-                    console.log(res.data)
-                    this.media = res.data
+                    console.log(res.data.results)
+                    this.mediaArray = res.data.results
                 })
-        }
+        },
     },
     created: function () {
         this.mediaInfoRequest()
     },
     computed: {
-        apiKey() {
-            return this.store.apiKey
+        apiUrl() {
+            return this.store.apiUrl
         }
-    }
+    },
 
 }
 
