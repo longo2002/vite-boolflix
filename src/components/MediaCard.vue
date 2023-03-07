@@ -46,9 +46,6 @@ export default {
                 })
         },
     },
-    created: function () {
-        this.mediaInfoRequest()
-    },
     computed: {
         apiUrl() {
             return this.store.apiUrl
