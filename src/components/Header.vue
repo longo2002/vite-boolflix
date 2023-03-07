@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         searchFunction() {
-            this.$emit("srcVal", this.srcVal)
+            this.$emit(this.srcVal)
             console.log("click!", this.srcVal)
         }
     },
