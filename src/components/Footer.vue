@@ -1,3 +1,7 @@
+<template>
+    <h1>Footer</h1>
+</template>
+
 <script >
 import store from '../store'
 export default {
@@ -8,9 +12,5 @@ export default {
     },
 }
 </script>
-
-<template>
-    <h1>Footer</h1>
-</template>
 
 <style scoped></style>

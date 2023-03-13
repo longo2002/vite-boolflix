@@ -1,18 +1,22 @@
 <template>
     <div class="mediacard_container">
         <div v-for="media in mediaArray" class="mediacard">
-            <ul>
+            <img v-if="media.poster_path" :src="this.imgPath + media.poster_path" alt="poster">
+            <img v-else src="/placeholder.png" width="342" alt="placeholder">
+            <ul class="info">
                 <li>
-                    <h2>{{ media.title }}</h2>
+                    <h2>{{ media.original_title }}</h2>
                 </li>
                 <li>
-                    <h4>{{ media.original_title }}</h4>
+                    <h4>{{ media.title }}</h4>
                 </li>
                 <li>
-                    <h4>{{ media.original_language }}</h4>
+                    <img v-if="flags[media.original_language]" :src="flags[media.original_language]" width="30" alt="flag">
+                    <h4 v-else>{{ media.original_language }}</h4>
                 </li>
                 <li>
-                    <h4>{{ parseFloat(media.vote_average).toFixed(2) }}</h4>
+                    <font-awesome-icon v-for="n in this.starVote(media.vote_average)" icon="fa-solid fa-star" />
+                    <font-awesome-icon v-for="n in (5 - this.starVote(media.vote_average))" icon="fa-regular fa-star" />
                 </li>
             </ul>
         </div>
@@ -28,12 +32,24 @@ export default {
         return {
             store,
             mediaArray: [],
+            movies: [],
+            tv: [],
+            flags: {
+                it: "/it.png",
+                en: "/en.png",
+                sp: "/sp.png",
+                fr: "/fr.png",
+            },
         }
     },
     methods: {
         mediaInfoRequest() {
+            this.fetchMovie()
+            // this.fetchTvSeries()
+        },
+        fetchMovie() {
             axios
-                .get(this.apiUrl, {
+                .get(this.apiUrlMovie, {
                     params: {
                         query: this.srcVal,
                     }
@@ -41,7 +57,21 @@ export default {
                 )
                 .then((res) => {
                     this.mediaArray = res.data.results
-                })
+                });
+        },
+        // fetchTvSeries() {
+        //     axios
+        //         .get(this.apiUrlTv, {
+        //             params: {
+        //                 query: this.srcVal,
+        //             }
+        //         })
+        //         .then((res) => {
+        //             this.mediaArray = res.data.results
+        //         });
+        // },
+        starVote(n) {
+            return Math.round(n / 2)
         },
     },
     watch: {
@@ -51,11 +81,17 @@ export default {
         }
     },
     computed: {
-        apiUrl() {
-            return this.store.apiUrl
+        apiUrlMovie() {
+            return this.store.apiUrlMovie
+        },
+        apiUrlTv() {
+            return this.store.apiUrlTv
         },
         srcVal() {
             return this.store.srcVal
+        },
+        imgPath() {
+            return this.store.imgPath
         }
     },
 
@@ -76,9 +112,7 @@ export default {
 }
 
 .mediacard {
-    height: 200px;
-    width: 400px;
-    border: 2px solid white;
+    width: 373px;
     padding: 15px;
 }
 </style>

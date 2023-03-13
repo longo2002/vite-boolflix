@@ -1,9 +1,11 @@
 <template>
-    <div class="container">
-        <img src="../assets/logo.png" alt="">
-        <div class="search-tools">
-            <input type="text" placeholder="Inserisci il titolo che desider!" v-model="srcVal">
-            <button @click=searchFunction()><i class="fa-solid fa-magnifying-glass"></i></button>
+    <div class="header">
+        <div class="container">
+            <img src="../assets/logo.png" alt="">
+            <div class="search-tools">
+                <input type="text" placeholder="Inserisci il titolo che desider!" v-model="srcVal">
+                <button @click=searchFunction()><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
         </div>
     </div>
 </template>
@@ -32,6 +34,10 @@ export default {
 </script>
 
 <style scoped>
+.header {
+    background-color: black;
+}
+
 .container {
     width: 1280px;
     margin: 0 auto;
